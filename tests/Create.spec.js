@@ -133,7 +133,7 @@ test.describe("Create", () => {
       )
       .click();
     await page.waitForTimeout(1000);
-    //프로필 이미지 삽입
+    //NFT 이미지 삽입
     let fileChooser = await fileChooserPromise;
     await fileChooser.setFiles(
       path.join(__dirname, "Incheon Heroes #1283.png")

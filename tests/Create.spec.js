@@ -2,6 +2,7 @@
 import { test, expect } from "@playwright/test";
 import path from "path";
 test.describe("Create", () => {
+  const image_path = path.join(__dirname, "../fixtures/images/");
   // create a new Agit
   test("AGIT", async ({ page }) => {
     //dev d.AGIT 페이지로 이동
@@ -32,7 +33,7 @@ test.describe("Create", () => {
     //프로필 이미지 삽입
     let fileChooser = await fileChooserPromise;
     // await page.getByRole("img", { name: "agit_logo" }).click();
-    await fileChooser.setFiles(path.join(__dirname, "Agit_profile.png"));
+    await fileChooser.setFiles(path.join(image_path, "agit_profile.png"));
     await page.waitForTimeout(1000);
     //배너 이미지 영역 선택
     fileChooserPromise = page.waitForEvent("filechooser");
@@ -44,7 +45,7 @@ test.describe("Create", () => {
     await page.waitForTimeout(1000);
     //배너 이미지 삽입
     fileChooser = await fileChooserPromise;
-    await fileChooser.setFiles(path.join(__dirname, "Agit_Banner.png"));
+    await fileChooser.setFiles(path.join(image_path, "agit_Banner.png"));
     await page.waitForTimeout(1000);
     //Create 버튼 클릭
     await page.getByRole("button", { name: "Create" }).click();
@@ -85,7 +86,7 @@ test.describe("Create", () => {
     await page.waitForTimeout(1000);
     //프로필 이미지 삽입
     let fileChooser = await fileChooserPromise;
-    await fileChooser.setFiles(path.join(__dirname, "Collection_profile.png"));
+    await fileChooser.setFiles(path.join(image_path, "collection_profile.png"));
     //배너 이미지 영역 선택
     fileChooserPromise = page.waitForEvent("filechooser");
     element = await page
@@ -96,7 +97,7 @@ test.describe("Create", () => {
     await page.waitForTimeout(1000);
     //배너 이미지 삽입
     fileChooser = await fileChooserPromise;
-    await fileChooser.setFiles(path.join(__dirname, "Collection_Banner.png"));
+    await fileChooser.setFiles(path.join(image_path, "collection_Banner.png"));
     await page.waitForTimeout(1000);
     //Create 버튼 클릭
     await page.getByRole("button", { name: "Create" }).click();
@@ -136,7 +137,7 @@ test.describe("Create", () => {
     //NFT 이미지 삽입
     let fileChooser = await fileChooserPromise;
     await fileChooser.setFiles(
-      path.join(__dirname, "Incheon Heroes #1283.png")
+      path.join(image_path, "Incheon Heroes #1283.png")
     );
     await page.waitForTimeout(1000);
     // Create 버튼 클릭

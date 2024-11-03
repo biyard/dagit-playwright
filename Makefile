@@ -11,4 +11,4 @@ node_modules:
 	npm install
 
 test: node_modules
-	$(BUILD_ENV) npx playwright test --quiet
+	$(BUILD_ENV) npx playwright test

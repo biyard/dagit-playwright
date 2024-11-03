@@ -1,27 +1,25 @@
-// @ts-check
 import { test, expect } from "@playwright/test";
+import { latency, agit_name, collection_name, nft_name } from "./constants";
 
-test.describe("navigation", () => {
+test.describe("testing collection", () => {
   test.beforeEach(async ({ page }) => {
-    // Go to the starting url before each test.
-    await page.goto("https://dev.dagit.club/ko/");
-    await page.waitForTimeout(3000);
+    await page.goto("/");
+    await page.waitForTimeout(latency);
   });
-  test("main navigation", async ({ page }) => {
-    // Assertions use the expect API.
-    await expect(page).toHaveURL("https://dev.dagit.club/ko/");
-    await page.waitForTimeout(3000);
+
+  test("default url to /ko", async ({ page }) => {
+    await expect(page).toHaveURL("/ko/");
+    await page.waitForTimeout(latency);
   });
-  test("get started link", async ({ page }) => {
-    // Assertions use the expect API.
+  test("have link to collection list", async ({ page }) => {
     await page.getByRole("link", { name: "Collection" }).click();
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(latency);
   });
-  test("go to page", async ({ page }) => {
-    // Assertions use the expect API.
-    await page.goto("https://dev.dagit.club/ko/collection/list/");
-    await page.getByText("UNSEEN LAYERS").click();
-    await page.waitForTimeout(3000);
-    // Expects page to have a heading with the name of Installation.
+
+  test("shows a created collection in collection list", async ({ page }) => {
+    // NOTE: wait for fetching and reflect to the UI
+    // await page.waitForTimeout(120000);
+    await page.getByText(collection_name).click();
+    await page.waitForTimeout(latency);
   });
 });

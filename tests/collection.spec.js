@@ -17,9 +17,9 @@ test.describe("testing collection", () => {
   });
 
   test("shows a created collection in collection list", async ({ page }) => {
-    // NOTE: wait for fetching and reflect to the UI
-    // await page.waitForTimeout(120000);
-    await page.getByText(collection_name).click();
+    await page.getByRole("link", { name: "Collection" }).click();
+    await page.waitForTimeout(latency);
+    await page.getByText(collection_name, { exact: true }).click();
     await page.waitForTimeout(latency);
   });
 });

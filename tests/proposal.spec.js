@@ -23,10 +23,7 @@ test.describe("testing", () => {
     await page.waitForTimeout(latency);
     await page.getByText("My Agit", { exact: true }).click();
     await page.waitForTimeout(latency);
-    await page.locator(
-      'xpath=//*[@id="main"]/div[1]/div[4]/div/div[4]/div/div[1]/div'
-    )
-    .click();
+    await page.getByText("test", { exact: true }).click();
     await page.waitForTimeout(latency);
     await page.getByText("DAO", { exact: true }).click();
     await page.waitForTimeout(latency);
@@ -40,7 +37,7 @@ test.describe("testing", () => {
       .getByPlaceholder("종료 일자를 입력해주세요.(YY.MM.DD)", {
         exact: true,
       })
-      .fill("24.11.04");
+      .fill("24.11.11");
     await page.waitForTimeout(latency);
     await page
       .getByPlaceholder("내용을 입력해주세요.", { exact: true })
@@ -75,43 +72,67 @@ test.describe("testing", () => {
 
 test("vote to proposal", async ({ page }) => {
   await page
-    .locator('xpath=//*[@id="main"]/div[1]/div[4]/div/div[4]/div')
-    .click();
-  await page.waitForTimeout(latency);
+  .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+  .click();
+await page.waitForTimeout(latency);
+await page.getByText("My Agit", { exact: true }).click();
+await page.waitForTimeout(latency);
+await page.getByText("test", { exact: true }).click();
+await page.waitForTimeout(latency);
+await page.getByText("DAO", { exact: true }).click();
+await page.waitForTimeout(latency);
+await page.getByText("DAO 테스트", { exact: true }).click();
+await page.waitForTimeout(latency);
+// await page
+// .locator('xpath=//*[@id="main"]/div[1]/div[4]/div/div[4]/div')
+// .click();
+//   await page.waitForTimeout(latency);
   await page.getByText("추천", { exact: true }).click();
   await page.waitForTimeout(latency);
+  await page.getByText("투표하기",{ exact: true }).click();
 });
 
 test("make comment to proposal", async ({ page }) => {
   await page
-    .locator('xpath=//*[@id="main"]/div[1]/div[4]/div/div[4]/div')
-    .click();
-  await page.waitForTimeout(latency);
-  await page
-  .getByPlaceholder("댓글을 남겨주세요.", { exact: true })
-  .press('input[name="Proposal 테스트"]', 'Enter');
+  .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+  .click();
 await page.waitForTimeout(latency);
-});
-
-test("make comment in proposal", async ({ page }) => {
-  await page
-    .locator('xpath=//*[@id="main"]/div[1]/div[4]/div/div[4]/div')
-    .click();
+await page.getByText("My Agit", { exact: true }).click();
+await page.waitForTimeout(latency);
+await page.getByText("test", { exact: true }).click();
+await page.waitForTimeout(latency);
+await page.getByText("DAO", { exact: true }).click();
+await page.waitForTimeout(latency);
+await page.getByText("DAO 테스트", { exact: true }).click();
+await page.waitForTimeout(latency);
+// await page
+// .locator('xpath=//*[@id="main"]/div[1]/div[4]/div/div[4]/div')
+// .click();
+  // await page.waitForTimeout(latency);
+  await page.getByPlaceholder("댓글을 남겨주세요.", { exact: true })
+  .fill('DAO test');
   await page.waitForTimeout(latency);
-  await page
-  .getByPlaceholder("댓글을 남겨주세요.", { exact: true })
-  .press('input[name="Proposal 테스트"]', 'Enter');
+  await page.getByPlaceholder("댓글을 남겨주세요.", { exact: true })
+  .press('Enter');
 await page.waitForTimeout(latency);
 });
 
 test("click a like to proposal", async ({ page }) => {
   await page
-    .locator('xpath=//*[@id="main"]/div[1]/div[4]/div/div[4]/div')
-    .click();
-  await page.waitForTimeout(latency);
-  await page
-    .locator('xpath=//*[@id="main"]/div[1]/div[4]/div/div[5]/div[1]/svg/path')
-    .click();
+  .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+  .click();
+await page.waitForTimeout(latency);
+await page.getByText("My Agit", { exact: true }).click();
+await page.waitForTimeout(latency);
+await page.getByText("test", { exact: true }).click();
+await page.waitForTimeout(latency);
+await page.getByText("DAO", { exact: true }).click();
+await page.waitForTimeout(latency);
+await page.getByText("DAO 테스트", { exact: true }).click();
+await page.waitForTimeout(latency);
+await page.locator('svg.fill-gray-600').click();
 await page.waitForTimeout(latency);
 });
 });
+
+// '#tsf > div:nth-child(2) > div.A8SBwf > div.RNNXgb > div > div.a4bIc > input'

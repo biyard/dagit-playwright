@@ -16,18 +16,17 @@ test.describe("testing", () => {
   });
 
   // test.describe("Create a proposal", () => {
-  test("make a proposal", async ({ page }) => {
-    await page
+    test("make a proposal", async ({ page }) => {
+      await page
       .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
       .click();
     await page.waitForTimeout(latency);
-    await page.getByText("My Agit", { exact: true }).click();
-    await page.waitForTimeout(latency);
-    await page.locator(
-      'xpath=//*[@id="main"]/div[1]/div[4]/div/div[4]/div/div[1]/div'
-    )
-    .click();
-    await page.waitForTimeout(latency);
+      await page.getByText("My Agit", { exact: true }).click();
+      await page.waitForTimeout(latency);
+      await page
+        .locator('xpath=//*[@id="main"]/div[1]/div[4]/div[3]/div[3]/div[1]')
+        .click();
+      await page.waitForTimeout(latency);
     await page.getByText("DAO", { exact: true }).click();
     await page.waitForTimeout(latency);
     await page.getByText("Create Proposal", { exact: true }).click();

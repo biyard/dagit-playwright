@@ -20,7 +20,7 @@ test("edit a profile", async ({ page }) => {
     .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
     .click();
   await page.waitForTimeout(latency);
-  await page.getByText("Edit Profile", { exact: true }).click();
+  await page.getByText("Collection_name", { exact: true }).click();
   await page.waitForTimeout(latency);
   let fileChooserPromise = page.waitForEvent("filechooser");
   let element = await page
@@ -47,8 +47,55 @@ await page.waitForTimeout(latency);
 await page.getByText("완료", { exact: true }).click();
 await page.waitForTimeout(latency);
 });
+
+test("check a creative credit", async ({ page }) => {
+  await page
+    .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+    .click();
+  await page.waitForTimeout(latency);
 });
-//check a creative credit
-//check a detail of creative credit
-//shows a created agit list
-//shows a created nft list
+
+test("check a creative credit earnings", async ({ page }) => {
+  await page
+    .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+    .click();
+  await page.waitForTimeout(latency);
+  await page
+  .locator('xpath=//*[@id="main"]/div[1]/div[4]/div[3]/div[1]/div/div[2]/button[2]/div')
+  .click();
+  await page.waitForTimeout(latency);
+  await page.getByText("Earnings", { exact: true }).click();
+  await page.waitForTimeout(latency);
+});
+
+test("check a creative credit activity", async ({ page }) => {
+  await page
+    .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+    .click();
+  await page.waitForTimeout(latency);
+  await page
+  .locator('xpath=//*[@id="main"]/div[1]/div[4]/div[3]/div[1]/div/div[2]/button[2]/div')
+  .click();
+  await page.waitForTimeout(latency);
+  await page.getByText("Activity", { exact: true }).click();
+  await page.waitForTimeout(latency);
+});
+
+test("shows a created nft list", async ({ page }) => {
+  await page
+    .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+    .click();
+  await page.waitForTimeout(latency);
+  // await page.getByText("Item", { exact: true }).click();
+  // await page.waitForTimeout(latency);
+});
+
+test("shows a created agit list", async ({ page }) => {
+  await page
+    .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+    .click();
+  await page.waitForTimeout(latency);
+  await page.getByText("My Agit", { exact: true }).click();
+  await page.waitForTimeout(latency);
+});
+});

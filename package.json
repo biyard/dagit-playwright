@@ -11,6 +11,6 @@
     "@types/node": "^22.8.4"
   },
     "scripts": {
-      "start": "set BASE_URL=https://dev.dagit.club && npx playwright test --ui"
+      "start": "set BASE_URL=https://dev.dagit.club && npx playwright test"
     }
 }

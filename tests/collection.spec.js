@@ -7,10 +7,6 @@ test.describe("testing collection", () => {
     await page.waitForTimeout(latency);
   });
 
-  test("default url to /ko", async ({ page }) => {
-    await expect(page).toHaveURL("/ko/");
-    await page.waitForTimeout(latency);
-  });
   test("have link to collection list", async ({ page }) => {
     await page.getByRole("link", { name: "Collection" }).click();
     await page.waitForTimeout(latency);

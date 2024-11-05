@@ -30,7 +30,7 @@ test.describe("setup data", () => {
     let fileChooserPromise = page.waitForEvent("filechooser");
     await page
       .locator(
-        'xpath=//*[@id="main"]/div[1]/div[1]/div/div[2]/div/div[1]/div[3]/div[1]/div/label/div/div',
+        'xpath=//*[@id="main"]/div[1]/div[1]/div/div[2]/div/div[1]/div[3]/div[1]/div/label/div/div'
       )
       .click();
     await page.waitForTimeout(latency);
@@ -40,7 +40,7 @@ test.describe("setup data", () => {
     fileChooserPromise = page.waitForEvent("filechooser");
     await page
       .locator(
-        'xpath=//*[@id="main"]/div[1]/div[1]/div/div[2]/div/div[1]/div[3]/div[2]/div/label/div/div/div/label/div',
+        'xpath=//*[@id="main"]/div[1]/div[1]/div/div[2]/div/div[1]/div[3]/div[2]/div/label/div/div/div/label/div'
       )
       .click();
     await page.waitForTimeout(latency);
@@ -71,7 +71,7 @@ test.describe("setup data", () => {
     let fileChooserPromise = page.waitForEvent("filechooser");
     await page
       .locator(
-        'xpath=//*[@id="main"]/div[1]/div[1]/div/div[2]/div/div[1]/div[3]/div[1]/div/label/div/div/div/label/div',
+        'xpath=//*[@id="main"]/div[1]/div[1]/div/div[2]/div/div[1]/div[3]/div[1]/div/label/div/div/div/label/div'
       )
       .click();
     await page.waitForTimeout(latency);
@@ -80,7 +80,7 @@ test.describe("setup data", () => {
     fileChooserPromise = page.waitForEvent("filechooser");
     await page
       .locator(
-        'xpath=//*[@id="main"]/div[1]/div[1]/div/div[2]/div/div[1]/div[3]/div[2]/div/label/div/div/div/label/div',
+        'xpath=//*[@id="main"]/div[1]/div[1]/div/div[2]/div/div[1]/div[3]/div[2]/div/label/div/div/div/label/div'
       )
       .click();
     await page.waitForTimeout(latency);
@@ -108,7 +108,7 @@ test.describe("setup data", () => {
     let fileChooserPromise = page.waitForEvent("filechooser");
     await page
       .locator(
-        'xpath=//*[@id="main"]/div[1]/div[1]/div/div[2]/div/div[1]/div[3]/div/div/label/div/div/div',
+        'xpath=//*[@id="main"]/div[1]/div[1]/div/div[2]/div/div[1]/div[3]/div/div/label/div/div/div'
       )
       .click();
     await page.waitForTimeout(latency);

@@ -23,9 +23,10 @@ test.describe("testing", () => {
   await page.waitForTimeout(latency);
     await page.getByText("My Agit", { exact: true }).click();
     await page.waitForTimeout(latency);
-    await page
-      .locator('xpath=//*[@id="main"]/div[1]/div[4]/div[3]/div[3]/div[1]')
-      .click();
+    // await page
+    //   .locator('xpath=//*[@id="main"]/div[1]/div[4]/div[3]/div[3]/div[1]')
+    //   .click();
+    await page.getByText(agit_name, { exact: true }).click();
     await page.waitForTimeout(latency);
     await page.getByText("DAO", { exact: true }).click();
     await page.waitForTimeout(latency);
@@ -66,7 +67,7 @@ test.describe("testing", () => {
     await page.waitForTimeout(latency);
     await page.getByText("My Agit", { exact: true }).click();
     await page.waitForTimeout(latency);
-    await page.getByText("test", { exact: true }).click();
+    await page.getByText(agit_name, { exact: true }).click();
     await page.waitForTimeout(latency);
     await page.getByText("DAO", { exact: true }).click();
     await page.waitForTimeout(latency);
@@ -79,7 +80,7 @@ test("vote to proposal", async ({ page }) => {
 await page.waitForTimeout(latency);
 await page.getByText("My Agit", { exact: true }).click();
 await page.waitForTimeout(latency);
-await page.getByText("test", { exact: true }).click();
+await page.getByText(agit_name, { exact: true }).click();
 await page.waitForTimeout(latency);
 await page.getByText("DAO", { exact: true }).click();
 await page.waitForTimeout(latency);
@@ -101,7 +102,7 @@ test("make comment to proposal", async ({ page }) => {
 await page.waitForTimeout(latency);
 await page.getByText("My Agit", { exact: true }).click();
 await page.waitForTimeout(latency);
-await page.getByText("test", { exact: true }).click();
+await page.getByText(agit_name, { exact: true }).click();
 await page.waitForTimeout(latency);
 await page.getByText("DAO", { exact: true }).click();
 await page.waitForTimeout(latency);
@@ -122,7 +123,7 @@ test("click a like to proposal", async ({ page }) => {
 await page.waitForTimeout(latency);
 await page.getByText("My Agit", { exact: true }).click();
 await page.waitForTimeout(latency);
-await page.getByText("test", { exact: true }).click();
+await page.getByText(agit_name, { exact: true }).click();
 await page.waitForTimeout(latency);
 await page.getByText("DAO", { exact: true }).click();
 await page.waitForTimeout(latency);

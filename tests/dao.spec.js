@@ -39,7 +39,7 @@ test.describe("testing", () => {
       .getByPlaceholder("종료 일자를 입력해주세요.(YY.MM.DD)", {
         exact: true,
       })
-      .fill("24.11.04");
+      .fill("24.11.11");
     await page.waitForTimeout(latency);
     await page
       .getByPlaceholder("내용을 입력해주세요.", { exact: true })

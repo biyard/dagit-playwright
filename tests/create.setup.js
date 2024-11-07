@@ -8,7 +8,6 @@ import {
 } from "./constants";
 import path from "path";
 
-let agit=agit_name;
 test.describe("setup data", () => {
   test.describe.configure({ mode: "serial" });
 

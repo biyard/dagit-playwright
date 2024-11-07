@@ -67,7 +67,7 @@ test.describe.serial("Without login", () => {
         await page.waitForTimeout(latency);
     });
 
-    test("test to go my profile", async ({ page }) => {
+    test("can't access the profile page", async ({ page }) => {
         await page.getByRole("button", { name: "Logout" }).click();
         await page.waitForTimeout(latency);
         await page
@@ -78,7 +78,7 @@ test.describe.serial("Without login", () => {
         await page.waitForTimeout(latency);
     });
 
-    test("check a create button invisible", async ({ page }) => {
+    test("create button invisible of main page", async ({ page }) => {
         await page.getByRole("button", { name: "Logout" }).click();
         await page.waitForTimeout(latency);
         await expect(page.locator('[data-dioxus-id="12"]')).not.toBeVisible();
@@ -117,7 +117,7 @@ test.describe.serial("Without login", () => {
         await page.waitForTimeout(latency);
     });
 
-    test("check the proposal create button invisible", async ({ page }) => {
+    test("proposal create button invisible of DAO page", async ({ page }) => {
         await page.getByRole("button", { name: "Logout" }).click();
         await page.waitForTimeout(latency);
         await page.getByPlaceholder("Search").click();

@@ -51,7 +51,6 @@ test.describe("setup data", () => {
 
     // NOTE: wait for transaction and fetcher.
     await page.waitForTimeout(5000);
-
   });
 
   test("creating a new collection", async ({ page }) => {

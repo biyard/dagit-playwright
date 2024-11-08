@@ -107,6 +107,8 @@ test.describe.serial("agit test", () => {
         await page.waitForTimeout(latency);
         await page.getByText("추천", { exact: true }).click();
         await page.waitForTimeout(latency);
+        await page.getByText("투표하기", { exact: true }).click();
+        await page.waitForTimeout(latency);
     });
     
     test("make comment in proposal", async ({ page }) => {

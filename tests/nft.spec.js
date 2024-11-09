@@ -54,7 +54,7 @@ test.describe("NFT test", () => {
         ],
       },
     });
-    const page = await context.newPage();
+    page = await context.newPage();
     // TODO: TEST with another user
   });
 
@@ -75,7 +75,7 @@ test.describe("NFT test", () => {
         ],
       },
     });
-    const page = await context.newPage();
+    page = await context.newPage();
 
     // TODO: TEST with another user
   });

@@ -15,7 +15,7 @@ test.describe("NFT test", () => {
     await page.waitForTimeout(latency);
   });
 
-  test("Veiw original NFT contents", async ({ page }) => {
+  test("View original NFT contents", async ({ page }) => {
     await page
       .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
       .click();
@@ -37,9 +37,8 @@ test.describe("NFT test", () => {
     await page.waitForTimeout(latency);
   });
 
-
   test("Buy NFT", async () => {
-    const browser = chromium.launch();
+    const browser = await chromium.launch();
     const context = await browser.newContext({
       storageState: {
         origins: [
@@ -77,9 +76,8 @@ test.describe("NFT test", () => {
     await page.waitForTimeout(latency);
   });
 
-
-  test("View original NFT by a new owner", async ({ page }) => {
-    const browser = chromium.launch();
+  test("View original NFT by a new owner", async () => {
+    const browser = await chromium.launch();
     const context = await browser.newContext({
       storageState: {
         origins: [

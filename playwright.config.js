@@ -93,5 +93,22 @@ module.exports = defineConfig({
       },
       dependencies: ["setup"],
     },
+    {
+      name: "chromium-with-anonymous-user",
+      testMatch: /.*\.aspec\.js/,
+      timeout: 30000,
+      use: {
+        headless: process.env.HEADLESS !== "false",
+        defaultBrowserType: "chromium",
+        viewport: {
+          width: 1920,
+          height: 1080,
+        },
+        userAgent: devices["Desktop Chrome"].userAgent,
+        deviceScaleFactor: 1,
+        isMobile: false,
+        hasTouch: false,
+      },
+    },
   ],
 });

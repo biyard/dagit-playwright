@@ -27,6 +27,7 @@ jobs:
     - name: Run Playwright tests
       env:
         IDENTITY: ${{ secrets.DAGIT_TEST_IDENTITY }}
+        IDENTITY2: ${{ secrets.DAGIT_TEST_IDENTITY2 }}
       run: make test
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}

@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { chromium } from "playwright";
 import {
   image_path,
   latency,
@@ -14,7 +15,7 @@ test.describe("NFT test", () => {
     await page.waitForTimeout(latency);
   });
 
-  test("veiw original NFT contents", async ({ page }) => {
+  test("Veiw original NFT contents", async ({ page }) => {
     await page
       .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
       .click();
@@ -25,7 +26,7 @@ test.describe("NFT test", () => {
     await page.waitForTimeout(latency);
   });
 
-  test("sell NFT", async ({ page }) => {
+  test("Sell NFT", async ({ page }) => {
     await page
       .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
       .click();
@@ -36,9 +37,9 @@ test.describe("NFT test", () => {
     await page.waitForTimeout(latency);
   });
 
+
   test("Buy NFT", async () => {
-    const { chromium } = require("playwright");
-    const browser = await chromium.launch();
+    const browser = chromium.launch();
     const context = await browser.newContext({
       storageState: {
         origins: [
@@ -54,8 +55,7 @@ test.describe("NFT test", () => {
         ],
       },
     });
-    // TODO: TEST with another user
-    //start from here
+
     const page = await context.newPage();
     await page.goto("/");
     await page.getByPlaceholder("Search").click();
@@ -77,9 +77,9 @@ test.describe("NFT test", () => {
     await page.waitForTimeout(latency);
   });
 
-  test("View original NFT by a new owner", async () => {
-    const { chromium } = require("playwright");
-    const browser = await chromium.launch();
+
+  test("View original NFT by a new owner", async ({ page }) => {
+    const browser = chromium.launch();
     const context = await browser.newContext({
       storageState: {
         origins: [
@@ -95,7 +95,7 @@ test.describe("NFT test", () => {
         ],
       },
     });
-    // TODO: TEST with another user
+
     const page = await context.newPage();
     await page.goto("/");
     await page
@@ -109,7 +109,6 @@ test.describe("NFT test", () => {
   });
 
   test("Failed to view original NFT by a previouse owner", async ({ page }) => {
-    // TODO: TEST with original user
     await page.getByPlaceholder("Search").click();
     await page.fill('[placeholder="Search"]', nft_name);
     await page.waitForTimeout(latency);

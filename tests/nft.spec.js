@@ -37,7 +37,8 @@ test.describe("NFT test", () => {
     await page.waitForTimeout(latency);
   });
 
-  test("Buy NFT", async ({ page }) => {
+
+  test("Buy NFT", async () => {
     const browser = chromium.launch();
     const context = await browser.newContext({
       storageState: {
@@ -54,9 +55,28 @@ test.describe("NFT test", () => {
         ],
       },
     });
-    page = await context.newPage();
-    // TODO: TEST with another user
+
+    const page = await context.newPage();
+    await page.goto("/");
+    await page.getByPlaceholder("Search").click();
+    await page.fill('[placeholder="Search"]', nft_name);
+    await page.waitForTimeout(latency);
+    await page.press('[placeholder="Search"]', "Enter");
+    await page.waitForTimeout(latency);
+    await page.locator('[data-node-hydration="24"]').click();
+    await page.waitForTimeout(latency);
+    await page.getByText(nft_name).first().click();
+    await page.waitForTimeout(latency);
+    await page.getByRole("button", { name: "Buy now" }).click();
+    await page.waitForTimeout(latency);
+    await page
+      .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+      .click();
+    await page.waitForTimeout(latency);
+    await page.getByText(nft_name, { exact: true }).click();
+    await page.waitForTimeout(latency);
   });
+
 
   test("View original NFT by a new owner", async ({ page }) => {
     const browser = chromium.launch();
@@ -75,12 +95,30 @@ test.describe("NFT test", () => {
         ],
       },
     });
-    page = await context.newPage();
 
-    // TODO: TEST with another user
+    const page = await context.newPage();
+    await page.goto("/");
+    await page
+      .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+      .click();
+    await page.waitForTimeout(latency);
+    await page.getByText("test 11221", { exact: true }).click();
+    await page.waitForTimeout(latency);
+    await page.getByRole("button", { name: "View Original" }).click();
+    await page.waitForTimeout(latency);
   });
 
   test("Failed to view original NFT by a previouse owner", async ({ page }) => {
-    // TODO: TEST with original user
+    await page.getByPlaceholder("Search").click();
+    await page.fill('[placeholder="Search"]', nft_name);
+    await page.waitForTimeout(latency);
+    await page.press('[placeholder="Search"]', "Enter");
+    await page.waitForTimeout(latency);
+    await page.locator('[data-node-hydration="24"]').click();
+    await page.waitForTimeout(latency);
+    await page.getByText(nft_name).first().click();
+    await page.waitForTimeout(latency);
+    await page.getByRole("button", { name: "View Original" }).click();
+    await page.waitForTimeout(latency);
   });
 });

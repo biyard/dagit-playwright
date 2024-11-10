@@ -6,6 +6,7 @@ import {
   agit_name,
   collection_name,
   nft_name,
+  screenshot_path,
 } from "./constants";
 import path from "path";
 
@@ -31,10 +32,23 @@ test.describe("NFT test", () => {
       .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
       .click();
     await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path("nft", "sell-nft", "1-my-profile"),
+      fullPage: true,
+    });
     await page.getByText(nft_name, { exact: true }).click();
     await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path("nft", "sell-nft", "2-nft-detail"),
+      fullPage: true,
+    });
+
     await page.getByRole("button", { name: "Sell Nft" }).click();
     await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path("nft", "sell-nft", "3-after-sell-nft"),
+      fullPage: true,
+    });
   });
 
   test("Buy NFT", async () => {

@@ -31,7 +31,7 @@ test.describe("NFT test", () => {
     await page
       .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
       .click();
-    await page.waitForTimeout(latency);
+    await page.waitForTimeout(latency * 4);
     await page.screenshot({
       path: screenshot_path("nft", "sell-nft", "1-my-profile"),
       fullPage: true,

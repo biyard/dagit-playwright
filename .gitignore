@@ -5,3 +5,4 @@ node_modules/
 /playwright/.cache/
 .vscode/
 playwright/.auth/user.json
+/screenshots/

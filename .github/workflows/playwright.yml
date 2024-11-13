@@ -1,9 +1,9 @@
 name: Playwright Tests
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
 jobs:
   test:
     timeout-minutes: 60
@@ -16,41 +16,41 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      env:
-        IDENTITY: ${{ secrets.DAGIT_TEST_IDENTITY }}
-        IDENTITY2: ${{ secrets.DAGIT_TEST_IDENTITY2 }}
-      run: make test
-          - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: screenshots
-        path: screenshots/
-        retention-days: 30
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
-    - name: Setup Pages
-      if: ${{ !cancelled() }}
-      uses: actions/configure-pages@v5
-    - name: Upload artifact
-      if: ${{ !cancelled() }}
-      uses: actions/upload-pages-artifact@v3
-      with:
-        # Upload entire repository
-        path: './playwright-report'
-    - name: Deploy to GitHub Pages
-      if: ${{ !cancelled() }}
-      id: deployment
-      uses: actions/deploy-pages@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Run Playwright tests
+        env:
+          IDENTITY: ${{ secrets.DAGIT_TEST_IDENTITY }}
+          IDENTITY2: ${{ secrets.DAGIT_TEST_IDENTITY2 }}
+        run: make test
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: screenshots
+          path: screenshots/
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+      - name: Setup Pages
+        if: ${{ !cancelled() }}
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        if: ${{ !cancelled() }}
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: "./playwright-report"
+      - name: Deploy to GitHub Pages
+        if: ${{ !cancelled() }}
+        id: deployment
+        uses: actions/deploy-pages@v4

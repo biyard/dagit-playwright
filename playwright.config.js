@@ -20,7 +20,7 @@ module.exports = defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: "html",
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -92,6 +92,23 @@ module.exports = defineConfig({
         hasTouch: false,
       },
       dependencies: ["setup"],
+    },
+    {
+      name: "chromium-with-anonymous-user",
+      testMatch: /.*\.aspec\.js/,
+      timeout: 30000,
+      use: {
+        headless: process.env.HEADLESS !== "false",
+        defaultBrowserType: "chromium",
+        viewport: {
+          width: 1920,
+          height: 1080,
+        },
+        userAgent: devices["Desktop Chrome"].userAgent,
+        deviceScaleFactor: 1,
+        isMobile: false,
+        hasTouch: false,
+      },
     },
   ],
 });

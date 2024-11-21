@@ -29,7 +29,7 @@ test.describe.serial("NFT", () => {
       ),
       fullPage: true,
     });
-    await page.getByText("Test NFT - 1730878927").click();
+    await page.getByText("Test NFT - 1732186193").click();
     await page.waitForTimeout(latency);
     await page.screenshot({
       path: screenshot_path(

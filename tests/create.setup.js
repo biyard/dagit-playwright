@@ -5,6 +5,7 @@ import {
   agit_name,
   collection_name,
   nft_name,
+  screenshot_path,
 } from "./constants";
 import path from "path";
 

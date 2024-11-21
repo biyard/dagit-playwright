@@ -10,7 +10,7 @@ import {
 } from "./constants";
 import path from "path";
 
-test.describe("NFT", () => {
+test.describe.serial("NFT", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
     await page.waitForTimeout(latency);
@@ -29,7 +29,7 @@ test.describe("NFT", () => {
       ),
       fullPage: true,
     });
-    await page.getByText(nft_name, { exact: true }).click();
+    await page.getByText("Test NFT - 1730878927").click();
     await page.waitForTimeout(latency);
     await page.screenshot({
       path: screenshot_path(
@@ -60,7 +60,7 @@ test.describe("NFT", () => {
       path: screenshot_path("nft", "sell-nft", "1-my-profile"),
       fullPage: true,
     });
-    await page.getByText(nft_name, { exact: true }).click();
+    await page.getByText("Test NFT - 1730878927").click();
     await page.waitForTimeout(latency);
     await page.screenshot({
       path: screenshot_path("nft", "sell-nft", "2-nft-detail"),
@@ -95,7 +95,7 @@ test.describe("NFT", () => {
     const page = await context.newPage();
     await page.goto("/");
     await page.getByPlaceholder("Search").click();
-    await page.fill('[placeholder="Search"]', nft_name);
+    await page.fill('[placeholder="Search"]', "Test NFT - 1730878927");
     await page.waitForTimeout(latency);
     await page.press('[placeholder="Search"]', "Enter");
     await page.waitForTimeout(latency);
@@ -111,7 +111,7 @@ test.describe("NFT", () => {
       path: screenshot_path("nft", "Buy-NFT", "2-go-to-nft"),
       fullPage: true,
     });
-    await page.getByText(nft_name).first().click();
+    await page.getByText("Test NFT - 1730878927").first().click();
     await page.waitForTimeout(latency);
     await page.screenshot({
       path: screenshot_path("nft", "Buy-NFT", "3-go-to-nft-detail"),
@@ -131,7 +131,8 @@ test.describe("NFT", () => {
       path: screenshot_path("nft", "Buy-NFT", "5-go-to-my-profile"),
       fullPage: true,
     });
-    await page.getByText(nft_name, { exact: true }).click();
+    await page.reload();
+    await page.getByText("Test NFT - 1730878927").click();
     await page.waitForTimeout(latency);
     await page.screenshot({
       path: screenshot_path("nft", "Buy-NFT", "6-go-to-nft-detail"),
@@ -171,7 +172,7 @@ test.describe("NFT", () => {
       ),
       fullPage: true,
     });
-    await page.getByText(nft_name, { exact: true }).click();
+    await page.getByText("Test NFT - 1730878927").click();
     await page.waitForTimeout(latency);
     await page.screenshot({
       path: screenshot_path(
@@ -197,7 +198,7 @@ test.describe("NFT", () => {
     page,
   }) => {
     await page.getByPlaceholder("Search").click();
-    await page.fill('[placeholder="Search"]', nft_name);
+    await page.fill('[placeholder="Search"]', "Test NFT - 1730878927");
     await page.waitForTimeout(latency);
     await page.press('[placeholder="Search"]', "Enter");
     await page.waitForTimeout(latency);
@@ -213,7 +214,7 @@ test.describe("NFT", () => {
       .locator('xpath=//*[@id="main"]/div[1]/div[2]/div/div/div[1]/div[3]')
       .click();
     await page.waitForTimeout(latency);
-    await page.getByText(nft_name).first().click();
+    await page.getByText("Test NFT - 1730878927").first().click();
     await page.waitForTimeout(latency);
     await page.screenshot({
       path: screenshot_path(
@@ -223,8 +224,10 @@ test.describe("NFT", () => {
       ),
       fullPage: true,
     });
-    await page.getByRole("button", { name: "View Original" }).click();
-    await page.waitForTimeout(latency);
+    const locator = page.locator(
+      'xpath=//*[@id="main"]/div[1]/div[4]/div/div[2]/button'
+    );
+    await expect(locator).toBeDisabled();
     await page.screenshot({
       path: screenshot_path(
         "nft",
@@ -233,5 +236,67 @@ test.describe("NFT", () => {
       ),
       fullPage: true,
     });
+  });
+
+  test("[NFT replace] Sell NFT", async () => {
+    const browser = await chromium.launch();
+    const context = await browser.newContext({
+      storageState: {
+        origins: [
+          {
+            origin: process.env.BASE_URL || "",
+            localStorage: [
+              {
+                name: "identity",
+                value: `"${process.env.IDENTITY2}"` || "",
+              },
+            ],
+          },
+        ],
+      },
+    });
+
+    const page = await context.newPage();
+    await page.goto("/");
+    await page.getByPlaceholder("Search").click();
+    await page.fill('[placeholder="Search"]', "Test NFT - 1730878927");
+    await page.waitForTimeout(latency);
+    await page.press('[placeholder="Search"]', "Enter");
+    await page.waitForTimeout(latency);
+    await page
+      .locator('xpath=//*[@id="main"]/div[1]/div[2]/div/div/div[1]/div[3]')
+      .click();
+    await page.waitForTimeout(latency);
+    await page.getByText("Test NFT - 1730878927").first().click();
+    await page.waitForTimeout(latency);
+    await page.getByRole("button", { name: "Sell Nft" }).click();
+    await page.waitForTimeout(latency);
+    await page
+      .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+      .click();
+    await page.waitForTimeout(latency);
+    await page.reload();
+    await page.getByText("Test NFT - 1730878927").click();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path("nft", "Buy-NFT", "6-go-to-nft-detail"),
+      fullPage: true,
+    });
+  });
+  test("[NFT replace] Buy NFT", async ({ page }) => {
+    await page.goto("/");
+    await page.getByPlaceholder("Search").click();
+    await page.fill('[placeholder="Search"]', "Test NFT - 1730878927");
+    await page.waitForTimeout(latency);
+    await page.press('[placeholder="Search"]', "Enter");
+    await page.waitForTimeout(latency);
+    await page
+      .locator('xpath=//*[@id="main"]/div[1]/div[2]/div/div/div[1]/div[3]')
+      .click();
+    await page.waitForTimeout(latency);
+    await page.getByText("Test NFT - 1730878927").first().click();
+    await page.waitForTimeout(latency);
+    await page.getByRole("button", { name: "Buy now" }).click();
+    await page.waitForTimeout(latency);
   });
 });

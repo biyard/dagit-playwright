@@ -182,7 +182,7 @@ test.describe.serial("Agit", () => {
       fullPage: true,
     });
     await page.getByText("투표하기", { exact: true }).click();
-    await page.waitForTimeout(latency);
+    await page.waitForTimeout(3000);
     await page.screenshot({
       path: screenshot_path("agit", "proposal-voting", "5-vote-success"),
       fullPage: true,
@@ -235,7 +235,7 @@ test.describe.serial("Agit", () => {
       fullPage: true,
     });
     await page.press('textarea[placeholder="댓글을 남겨주세요."]', "Enter");
-    await page.waitForTimeout(latency);
+    await page.waitForTimeout(3000);
     await page.screenshot({
       path: screenshot_path(
         "agit",
@@ -280,7 +280,7 @@ test.describe.serial("Agit", () => {
       fullPage: true,
     });
     await page.locator("svg.fill-gray-600").click();
-    await page.waitForTimeout(latency);
+    await page.waitForTimeout(3000);
     await page.screenshot({
       path: screenshot_path(
         "agit",
@@ -309,9 +309,137 @@ test.describe.serial("Agit", () => {
       fullPage: true,
     });
     await page.getByRole("button", { name: "Follow" }).click();
-    await page.waitForTimeout(latency);
+    await page.waitForTimeout(3000);
     await page.screenshot({
       path: screenshot_path("agit", "follow-a-agit", "3-click-follow-button"),
+      fullPage: true,
+    });
+  });
+
+  test("[AGIT-008] Proposal comment time stamp check", async ({ page }) => {
+    await page
+      .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+      .click();
+    await page.waitForTimeout(latency);
+    await page.getByText("My Agit", { exact: true }).click();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "agit",
+        "Proposal-comment-time-stamp-check",
+        "1-go-to-agit-list"
+      ),
+      fullPage: true,
+    });
+    await page.getByText(agit_name, { exact: true }).click();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "agit",
+        "Proposal-comment-time-stamp-check",
+        "2-go-to-agit"
+      ),
+      fullPage: true,
+    });
+    await page.getByText("DAO", { exact: true }).click();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "agit",
+        "Proposal-comment-time-stamp-check",
+        "3-go-to-proposal-list"
+      ),
+      fullPage: true,
+    });
+    await page.getByText("DAO 테스트", { exact: true }).click();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "agit",
+        "Proposal-comment-time-stamp-check",
+        "4-go-to-proposal-detail-page"
+      ),
+      fullPage: true,
+    });
+    await page
+      .locator('textarea[placeholder="댓글을 남겨주세요."]')
+      .fill("test");
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "agit",
+        "Proposal-comment-time-stamp-check",
+        "5-write-comment"
+      ),
+      fullPage: true,
+    });
+    await page.press('textarea[placeholder="댓글을 남겨주세요."]', "Enter");
+    await page.waitForTimeout(1000);
+    await page.screenshot({
+      path: screenshot_path(
+        "agit",
+        "Proposal-comment-time-stamp-check",
+        "6-check-time-stamp"
+      ),
+      fullPage: true,
+    });
+  });
+
+  test("[AGIT-009] Proposal voting result check", async ({ page }) => {
+    await page
+      .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+      .click();
+    await page.waitForTimeout(latency);
+    await page.getByText("My Agit", { exact: true }).click();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "agit",
+        "Proposal-voting-result-check",
+        "1-go-to-agit-list"
+      ),
+      fullPage: true,
+    });
+    await page.getByText("Test Agit - 1730880533", { exact: true }).click();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "agit",
+        "Proposal-voting-result-check",
+        "2-go-to-agit"
+      ),
+      fullPage: true,
+    });
+    await page.getByText("DAO", { exact: true }).click();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "agit",
+        "Proposal-voting-result-check",
+        "3-go-to-proposal-list"
+      ),
+      fullPage: true,
+    });
+    await page.getByText("DAO 테스트", { exact: true }).click();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "agit",
+        "Proposal-voting-result-check",
+        "4-go-to-proposal-detail-page"
+      ),
+      fullPage: true,
+    });
+    const percentageLocator = page.locator("span.z-[1].text-right", {
+      hasText: /([1-9]?[0-9]|100)%/,
+    });
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "agit",
+        "Proposal-voting-result-check",
+        "5-proposal-voting-check"
+      ),
       fullPage: true,
     });
   });

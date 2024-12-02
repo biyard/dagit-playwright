@@ -13,5 +13,5 @@ node_modules:
 	npm install
 
 test: node_modules
-	$(BUILD_ENV) npx playwright test $(PR_FLAG)
+	$(BUILD_ENV) npx playwright test$(PR_FLAG)
 

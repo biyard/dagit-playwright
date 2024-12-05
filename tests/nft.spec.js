@@ -3,6 +3,7 @@ import { chromium } from "playwright";
 import {
   image_path,
   latency,
+  longlatency,
   agit_name,
   collection_name,
   nft_name,
@@ -40,7 +41,7 @@ test.describe.serial("NFT", () => {
       fullPage: true,
     });
     await page.getByRole("button", { name: "View Original" }).click();
-    await page.waitForTimeout(5000);
+    await page.waitForTimeout(longlatency);
     await page.screenshot({
       path: screenshot_path(
         "nft",
@@ -238,6 +239,7 @@ test.describe.serial("NFT", () => {
     });
   });
 
+  // When search function is working rightly, adjust "[NFT replace] tests"
   test("[NFT replace] Sell NFT", async () => {
     const browser = await chromium.launch();
     const context = await browser.newContext({
@@ -298,5 +300,50 @@ test.describe.serial("NFT", () => {
     await page.waitForTimeout(latency);
     await page.getByRole("button", { name: "Buy now" }).click();
     await page.waitForTimeout(latency);
+  });
+
+  test("[NFT-006] Check the NFT image section size", async ({ page }) => {
+    await page
+      .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+      .click();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "nft",
+        "Check-the-NFT-image-section-size",
+        "1-my-profile"
+      ),
+      fullPage: true,
+    });
+    await page.getByText("Test NFT - 1732186193").click();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "nft",
+        "Check-the-NFT-image-section-size",
+        "2-nft-detail"
+      ),
+      fullPage: true,
+    });
+    await page.getByRole("button", { name: "Details" }).click();
+    await page.waitForTimeout(longlatency);
+    await page.screenshot({
+      path: screenshot_path(
+        "nft",
+        "Check-the-NFT-image-section-size",
+        "3-view-Detail-button-page"
+      ),
+      fullPage: true,
+    });
+    await page.getByRole("button", { name: "Activity" }).click();
+    await page.waitForTimeout(longlatency);
+    await page.screenshot({
+      path: screenshot_path(
+        "nft",
+        "Check-the-NFT-image-section-size",
+        "3-view-Activity-button-page"
+      ),
+      fullPage: true,
+    });
   });
 });

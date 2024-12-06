@@ -6,6 +6,7 @@ import {
   collection_name,
   nft_name,
   screenshot_path,
+  longlatency,
 } from "./constants";
 import path from "path";
 
@@ -182,7 +183,7 @@ test.describe.serial("Agit", () => {
       fullPage: true,
     });
     await page.getByText("투표하기", { exact: true }).click();
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(longlatency);
     await page.screenshot({
       path: screenshot_path("agit", "proposal-voting", "5-vote-success"),
       fullPage: true,
@@ -235,7 +236,7 @@ test.describe.serial("Agit", () => {
       fullPage: true,
     });
     await page.press('textarea[placeholder="댓글을 남겨주세요."]', "Enter");
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(longlatency);
     await page.screenshot({
       path: screenshot_path(
         "agit",
@@ -280,7 +281,7 @@ test.describe.serial("Agit", () => {
       fullPage: true,
     });
     await page.locator("svg.fill-gray-600").click();
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(longlatency);
     await page.screenshot({
       path: screenshot_path(
         "agit",
@@ -309,7 +310,7 @@ test.describe.serial("Agit", () => {
       fullPage: true,
     });
     await page.getByRole("button", { name: "Follow" }).click();
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(longlatency);
     await page.screenshot({
       path: screenshot_path("agit", "follow-a-agit", "3-click-follow-button"),
       fullPage: true,
@@ -374,7 +375,7 @@ test.describe.serial("Agit", () => {
       fullPage: true,
     });
     await page.press('textarea[placeholder="댓글을 남겨주세요."]', "Enter");
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(longlatency);
     await page.screenshot({
       path: screenshot_path(
         "agit",

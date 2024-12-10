@@ -346,4 +346,135 @@ test.describe.serial("NFT", () => {
       fullPage: true,
     });
   });
+
+  //'NFT-007' test codes will be adjust, when search function is fixed
+
+  test("[NFT-007] Check NFT status after trades", async ({ page }) => {
+    const buttonLocator1 = page.getByRole("button", { name: "Buy now" });
+    await page.goto("https://dev.dagit.club/ko/nft/69/0");
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "nft",
+        "Check-NFT-status-after-trades",
+        "1-NFT-detail-page(Sell)"
+      ),
+      fullPage: true,
+    });
+    await page.getByRole("button", { name: "Sell Nft" }).click();
+    await page.waitForTimeout(latency);
+    await expect(buttonLocator1).toBeVisible();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "nft",
+        "Check-NFT-status-after-trades",
+        "2-chcek-the-NFT-status(visible-Buy-now-button)"
+      ),
+      fullPage: true,
+    });
+    const browser = await chromium.launch();
+    const context2 = await browser.newContext({
+      storageState: {
+        origins: [
+          {
+            origin: process.env.BASE_URL || "",
+            localStorage: [
+              {
+                name: "identity",
+                value: `"${process.env.IDENTITY2}"` || "",
+              },
+            ],
+          },
+        ],
+      },
+    });
+    const buttonLocator2 = page.getByRole("button", { name: "Sell Nft" });
+    const page1 = await context2.newPage();
+    await page1.goto("https://dev.dagit.club/ko/nft/69/0");
+    await page1.waitForTimeout(latency);
+    await page1.screenshot({
+      path: screenshot_path(
+        "nft",
+        "Check-NFT-status-after-trades",
+        "3-NFT-detail-page(Buy)"
+      ),
+      fullPage: true,
+    });
+    await page1.getByRole("button", { name: "Buy now" }).click();
+    await page1.waitForTimeout(latency);
+    await expect(buttonLocator2).toBeVisible();
+    await page1.waitForTimeout(latency);
+    await page1.screenshot({
+      path: screenshot_path(
+        "nft",
+        "Check-NFT-status-after-trades",
+        "4-chcek-the-NFT-status(visible-Sell-NFT-button)"
+      ),
+      fullPage: true,
+    });
+  });
+
+  // When search function is working rightly, adjust "[NFT replace] tests"
+  test("[NFT replace2] Sell NFT", async () => {
+    const browser = await chromium.launch();
+    const context = await browser.newContext({
+      storageState: {
+        origins: [
+          {
+            origin: process.env.BASE_URL || "",
+            localStorage: [
+              {
+                name: "identity",
+                value: `"${process.env.IDENTITY2}"` || "",
+              },
+            ],
+          },
+        ],
+      },
+    });
+
+    const page = await context.newPage();
+    await page.goto("/");
+    await page.getByPlaceholder("Search").click();
+    await page.fill('[placeholder="Search"]', "Test NFT - 1730878927");
+    await page.waitForTimeout(latency);
+    await page.press('[placeholder="Search"]', "Enter");
+    await page.waitForTimeout(latency);
+    await page
+      .locator('xpath=//*[@id="main"]/div[1]/div[2]/div/div/div[1]/div[3]')
+      .click();
+    await page.waitForTimeout(latency);
+    await page.getByText("Test NFT - 1730878927").first().click();
+    await page.waitForTimeout(latency);
+    await page.getByRole("button", { name: "Sell Nft" }).click();
+    await page.waitForTimeout(latency);
+    await page
+      .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+      .click();
+    await page.waitForTimeout(latency);
+    await page.reload();
+    await page.getByText("Test NFT - 1730878927").click();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path("nft", "Buy-NFT", "6-go-to-nft-detail"),
+      fullPage: true,
+    });
+  });
+  test("[NFT replace2] Buy NFT", async ({ page }) => {
+    await page.goto("/");
+    await page.getByPlaceholder("Search").click();
+    await page.fill('[placeholder="Search"]', "Test NFT - 1730878927");
+    await page.waitForTimeout(latency);
+    await page.press('[placeholder="Search"]', "Enter");
+    await page.waitForTimeout(latency);
+    await page
+      .locator('xpath=//*[@id="main"]/div[1]/div[2]/div/div/div[1]/div[3]')
+      .click();
+    await page.waitForTimeout(latency);
+    await page.getByText("Test NFT - 1730878927").first().click();
+    await page.waitForTimeout(latency);
+    await page.getByRole("button", { name: "Buy now" }).click();
+    await page.waitForTimeout(latency);
+  });
 });

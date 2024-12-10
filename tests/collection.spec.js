@@ -163,47 +163,48 @@ test.describe("Collection", () => {
     });
   });
 
-  // test("[Collection-004] Check the item quantity", async ({ page }) => {
-  //   await page.getByPlaceholder("Search").click();
-  //   await page.fill('[placeholder="Search"]', "Test Collection - 1730878927");
-  //   await page.waitForTimeout(latency);
-  //   await page.press('[placeholder="Search"]', "Enter");
-  //   await page.waitForTimeout(latency);
-  //   await page.screenshot({
-  //     path: screenshot_path(
-  //       "collection",
-  //       "Check-the-item-quantity",
-  //       "1-search-a-collection-name"
-  //     ),
-  //     fullPage: true,
+  //Need some help!
+  //   test("[Collection-004] Check the item quantity", async ({ page }) => {
+  //     await page.getByPlaceholder("Search").click();
+  //     await page.fill('[placeholder="Search"]', "Test Collection - 1730878927");
+  //     await page.waitForTimeout(latency);
+  //     await page.press('[placeholder="Search"]', "Enter");
+  //     await page.waitForTimeout(latency);
+  //     await page.screenshot({
+  //       path: screenshot_path(
+  //         "collection",
+  //         "Check-the-item-quantity",
+  //         "1-search-a-collection-name"
+  //       ),
+  //       fullPage: true,
+  //     });
+  //     await page
+  //       .locator('xpath=//*[@id="main"]/div[1]/div[2]/div/div/div[1]/div[2]')
+  //       .click();
+  //     await page.waitForTimeout(latency);
+  //     await page.getByText("Test Collection - 1730878927").first().click();
+  //     await page.waitForTimeout(latency);
+  //     await page.screenshot({
+  //       path: screenshot_path(
+  //         "collection",
+  //         "Check-the-item-quantity",
+  //         "2-view-a-collection-page"
+  //       ),
+  //       fullPage: true,
+  //     });
+  //     const itemCountLocator = page.locator(
+  //       'xpath=//*[@id="main"]/div[1]/div[4]/div/div[2]/div[2]/p/span'
+  //     );
+  //     const displayedItemCount = parseInt(
+  //       await itemCountLocator.textContent(),
+  //       10
+  //     );
+  //     const renderedItemsLocator = page.locator(
+  //       'xpath=//*[@id="main"]/div[1]/div[4]/div/div[2]/div[3]'
+  //     );
+  //     const actualRenderedItemCount = await renderedItemsLocator.count();
+  //     console.log(`Displayed item count: ${displayedItemCount}`);
+  //     console.log(`Rendered item count: ${actualRenderedItemCount}`);
+  //     expect(displayedItemCount).toBe(actualRenderedItemCount);
   //   });
-  //   await page
-  //     .locator('xpath=//*[@id="main"]/div[1]/div[2]/div/div/div[1]/div[2]')
-  //     .click();
-  //   await page.waitForTimeout(latency);
-  //   await page.getByText("Test Collection - 1730878927").first().click();
-  //   await page.waitForTimeout(latency);
-  //   await page.screenshot({
-  //     path: screenshot_path(
-  //       "collection",
-  //       "Check-the-item-quantity",
-  //       "2-view-a-collection-page"
-  //     ),
-  //     fullPage: true,
-  //   });
-  //   const itemCountLocator = page.locator(
-  //     'xpath=//*[@id="main"]/div[1]/div[4]/div/div[2]/div[2]/p/span'
-  //   );
-  //   const displayedItemCount = parseInt(
-  //     await itemCountLocator.textContent(),
-  //     10
-  //   );
-  //   const renderedItemsLocator = page.locator(
-  //     'xpath=//*[@id="main"]/div[1]/div[4]/div/div[2]/div[3]'
-  //   );
-  //   const actualRenderedItemCount = await renderedItemsLocator.count();
-  //   console.log(`Displayed item count: ${displayedItemCount}`);
-  //   console.log(`Rendered item count: ${actualRenderedItemCount}`);
-  //   expect(displayedItemCount).toBe(actualRenderedItemCount);
-  // });
 });

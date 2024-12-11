@@ -64,4 +64,48 @@ test.describe("Main", () => {
       fullPage: true,
     });
   });
+
+  //The outside of popup section click, popup have to still visible
+  test("[Main-003] Out of popup section click test", async ({ page }) => {
+    const popup = page.locator('xpath=//*[@id="main"]/div[1]/div[1]');
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "Main",
+        "Out-of-popup-section-click-test",
+        "1-go-to-main-page"
+      ),
+      fullPage: true,
+    });
+    await page.getByText("Create", { exact: true }).click();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "Main",
+        "Out-of-popup-section-click-test",
+        "2-go-to-create-page"
+      ),
+      fullPage: true,
+    });
+    await page.locator("body").click();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "Main",
+        "Out-of-popup-section-click-test",
+        "3-click-to-out-of-popup-section"
+      ),
+      fullPage: true,
+    });
+    await expect(popup).toBeVisible();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "Main",
+        "Out-of-popup-section-click-test",
+        "4-still-visible-popup-section"
+      ),
+      fullPage: true,
+    });
+  });
 });

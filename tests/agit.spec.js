@@ -488,11 +488,11 @@ test.describe.serial("Agit", () => {
       .fill("Create function test");
     await page.waitForTimeout(latency);
     let date = new Date();
-    date.setDate(date.getDate() + 0);
+    date.setDate(date.getDate());
     let year = date.getFullYear();
     year = String(year);
     let yy = year.substring(2, 4);
-    let month = new String(date.getMonth() + 0);
+    let month = new String(date.getMonth());
     let day = new String(date.getDate());
     if (month.length == 1) {
       month = "0" + month;

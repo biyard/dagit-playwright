@@ -163,47 +163,64 @@ test.describe("Collection", () => {
     });
   });
 
-  // test("[Collection-004] Check the item quantity", async ({ page }) => {
-  //   await page.getByPlaceholder("Search").click();
-  //   await page.fill('[placeholder="Search"]', "Test Collection - 1730878927");
-  //   await page.waitForTimeout(latency);
-  //   await page.press('[placeholder="Search"]', "Enter");
-  //   await page.waitForTimeout(latency);
-  //   await page.screenshot({
-  //     path: screenshot_path(
-  //       "collection",
-  //       "Check-the-item-quantity",
-  //       "1-search-a-collection-name"
-  //     ),
-  //     fullPage: true,
-  //   });
-  //   await page
-  //     .locator('xpath=//*[@id="main"]/div[1]/div[2]/div/div/div[1]/div[2]')
-  //     .click();
-  //   await page.waitForTimeout(latency);
-  //   await page.getByText("Test Collection - 1730878927").first().click();
-  //   await page.waitForTimeout(latency);
-  //   await page.screenshot({
-  //     path: screenshot_path(
-  //       "collection",
-  //       "Check-the-item-quantity",
-  //       "2-view-a-collection-page"
-  //     ),
-  //     fullPage: true,
-  //   });
-  //   const itemCountLocator = page.locator(
-  //     'xpath=//*[@id="main"]/div[1]/div[4]/div/div[2]/div[2]/p/span'
-  //   );
-  //   const displayedItemCount = parseInt(
-  //     await itemCountLocator.textContent(),
-  //     10
-  //   );
-  //   const renderedItemsLocator = page.locator(
-  //     'xpath=//*[@id="main"]/div[1]/div[4]/div/div[2]/div[3]'
-  //   );
-  //   const actualRenderedItemCount = await renderedItemsLocator.count();
-  //   console.log(`Displayed item count: ${displayedItemCount}`);
-  //   console.log(`Rendered item count: ${actualRenderedItemCount}`);
-  //   expect(displayedItemCount).toBe(actualRenderedItemCount);
-  // });
+  test("[Collection-004] Check-item-quantity-matches-the-displayed-text", async ({
+    page,
+  }) => {
+    await page
+      .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+      .click();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "collection",
+        "Check-item-quantity-matches-the-displayed-text",
+        "1-go-to-my-profile-page"
+      ),
+      fullPage: true,
+    });
+    await page.getByText("My Agit", { exact: true }).click();
+    await page.waitForTimeout(latency);
+    await page.getByText("Test Agit - 1730878927").click();
+    await page.waitForTimeout(latency);
+    await page.getByText("Test Collection - 1730878927").first().click();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "collection",
+        "Check-item-quantity-matches-the-displayed-text",
+        "2-view-a-collection-page"
+      ),
+      fullPage: true,
+    });
+
+    const childDivs = await page.locator(
+      'xpath=//*[@id="main"]/div[1]/div[4]/div/div[3]/div[3]/*'
+    );
+    const count = await childDivs.count();
+    const displayedText = await page
+      .locator(
+        'xpath=//*[@id="main"]/div[1]/div[4]/div/div[3]/div[1]/div[1]/div[2]/div[1]/p[2]'
+      )
+      .innerText();
+    const displayedNumber = parseInt(displayedText.replace(/\D/g, ""), 10);
+
+    if (count === displayedNumber) {
+      console.log(
+        `Test passed: Item count (${count}) matches displayed number (${displayedNumber})`
+      );
+    } else {
+      throw new Error(
+        `Test failed: Item count (${count}) does not match displayed number (${displayedNumber})`
+      );
+    }
+
+    await page.screenshot({
+      path: screenshot_path(
+        "collection",
+        "Check-item-quantity-matches-the-displayed-text",
+        "3-check-item-quantity"
+      ),
+      fullPage: true,
+    });
+  });
 });

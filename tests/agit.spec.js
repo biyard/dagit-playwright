@@ -444,4 +444,135 @@ test.describe.serial("Agit", () => {
       fullPage: true,
     });
   });
+
+  //This test for the dates are written wrong and after fixed rightly, the create function will process rightly.
+  test("[AGIT-010] Proposal create function test", async ({ page }) => {
+    await page
+      .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+      .click();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "agit",
+        "Proposal-create-function-test",
+        "1-go-to-search-bar"
+      ),
+      fullPage: true,
+    });
+    await page.getByText("My Agit", { exact: true }).click();
+    await page.waitForTimeout(latency);
+    await page.getByText("Test Agit - 1733150290", { exact: true }).click();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "agit",
+        "Proposal-create-function-test",
+        "2-select-agit"
+      ),
+      fullPage: true,
+    });
+    await page.getByText("DAO", { exact: true }).click();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "agit",
+        "Proposal-create-function-test",
+        "3-go-to-DAO"
+      ),
+      fullPage: true,
+    });
+    await page.getByText("Create Proposal", { exact: true }).click();
+    await page.waitForTimeout(latency);
+    await page
+      .getByPlaceholder("제목을 입력해주세요.", { exact: true })
+      .fill("Create function test");
+    await page.waitForTimeout(latency);
+    let date = new Date();
+    date.setDate(date.getDate());
+    let year = date.getFullYear();
+    year = String(year);
+    let yy = year.substring(2, 4);
+    let month = new String(date.getMonth());
+    let day = new String(date.getDate());
+    if (month.length == 1) {
+      month = "0" + month;
+    }
+    if (day.length == 1) {
+      day = "0" + day;
+    }
+    let str = yy + "." + month + "." + day;
+    await page
+      .getByPlaceholder("종료 일자를 입력해주세요.(YY.MM.DD)", {
+        exact: true,
+      })
+      .fill(str);
+    await page.waitForTimeout(latency);
+    await page
+      .getByPlaceholder("내용을 입력해주세요.", { exact: true })
+      .fill("Test");
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "agit",
+        "Proposal-create-function-test",
+        "4-fill-wrong-date-in-a-proposal"
+      ),
+      fullPage: true,
+    });
+    await page.getByText("등록", { exact: true }).click();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "agit",
+        "Proposal-create-function-test",
+        "5-proposal-create-failed"
+      ),
+      fullPage: true,
+    });
+    await page.waitForTimeout(latency);
+    let date1 = new Date();
+    date1.setDate(date.getDate());
+    let year1 = date.getFullYear();
+    year1 = String(year);
+    let yy1 = year.substring(2, 4);
+    let month1 = new String(date.getMonth() + 1);
+    let day1 = new String(date.getDate() + 7);
+    if (month.length == 1) {
+      month = "0" + month;
+    }
+    if (day.length == 1) {
+      day = "0" + day;
+    }
+    let str1 = yy1 + "." + month1 + "." + day1;
+    await page
+      .getByPlaceholder("종료 일자를 입력해주세요.(YY.MM.DD)", {
+        exact: true,
+      })
+      .clear(str);
+    await page.waitForTimeout(latency);
+    await page
+      .getByPlaceholder("종료 일자를 입력해주세요.(YY.MM.DD)", {
+        exact: true,
+      })
+      .fill(str1);
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "agit",
+        "Proposal-create-function-test",
+        "6-fill-proposal-date-rightly"
+      ),
+      fullPage: true,
+    });
+    await page.getByText("등록", { exact: true }).click();
+    await page.waitForTimeout(longlatency);
+    await page.screenshot({
+      path: screenshot_path(
+        "agit",
+        "Proposal-create-function-test",
+        "7-proposal-create-success"
+      ),
+      fullPage: true,
+    });
+  });
 });

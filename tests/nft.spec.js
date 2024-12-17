@@ -477,4 +477,28 @@ test.describe.serial("NFT", () => {
     await page.getByRole("button", { name: "Buy now" }).click();
     await page.waitForTimeout(latency);
   });
+
+  test("[NFT-008] Image-section-size-check-between-Detail&Activity-menu ", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await page.waitForTimeout(latency);
+    await page
+      .locator('xpath=//*[@id="main"]/div[1]/div[5]/header/div/div[2]/div')
+      .click();
+    await page.waitForTimeout(latency);
+    await page.getByText("Test NFT - 1730878927").first().click();
+    await page.waitForTimeout(latency);
+    const style = page.locator('[style="height: 700px"]');
+    const originalStyle = await style.evaluate((element) => {
+      return element.style.height;
+    });
+    console.log(`Original style: ${originalStyle}`);
+    await page.getByRole("button", { name: "Activity" }).click();
+    const updatedStyle = await style.evaluate((element) => {
+      return element.style.height;
+    });
+    console.log(`Updated style: ${updatedStyle}`);
+    expect(updatedStyle).toBe(originalStyle);
+  });
 });

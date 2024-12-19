@@ -27,7 +27,7 @@ test.describe("Main", () => {
       fullPage: true,
     });
     await page
-      .locator('xpath=//*[@id="main"]/div[1]/div[4]/div/div/div[1]/div[3]')
+      .locator('xpath=//*[@id="main"]/div[1]/div[5]/div[1]/div/div[1]/div[3]')
 
       .click();
     await page.waitForTimeout(latency);
@@ -39,7 +39,7 @@ test.describe("Main", () => {
       ),
     });
     await page
-      .locator('xpath=//*[@id="main"]/div[1]/div[4]/div/div/div[1]/div[1]')
+      .locator('xpath=//*[@id="main"]/div[1]/div[5]/div[1]/div/div[1]/div[1]')
       .click();
     await page.waitForTimeout(latency);
     await page.screenshot({

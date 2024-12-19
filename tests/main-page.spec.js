@@ -16,7 +16,7 @@ test.describe("Main", () => {
     await page.waitForTimeout(latency);
   });
 
-  test("[Main-001] Main banner scroll ckeck", async ({ page }) => {
+  test("[Main-page-001] Main banner scroll ckeck", async ({ page }) => {
     await page.waitForTimeout(latency);
     await page.screenshot({
       path: screenshot_path(
@@ -52,7 +52,7 @@ test.describe("Main", () => {
   });
 
   //In to the create page, background is should be blurred
-  test("[Main-002] Screen blur check", async ({ page }) => {
+  test("[Main-page-002] Screen blur check", async ({ page }) => {
     await page.waitForTimeout(latency);
     await page.screenshot({
       path: screenshot_path("Main", "Screen-blur-check", "1-go-to-main-page"),
@@ -66,7 +66,7 @@ test.describe("Main", () => {
   });
 
   //The outside of popup section click, popup have to still visible
-  test("[Main-003] Out of popup section click test", async ({ page }) => {
+  test("[Main-page-003] Out of popup section click test", async ({ page }) => {
     const popup = page.locator('xpath=//*[@id="main"]/div[1]/div[1]');
     await page.waitForTimeout(latency);
     await page.screenshot({

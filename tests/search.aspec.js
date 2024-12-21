@@ -111,7 +111,7 @@ test.describe("Search", () => {
 
   test("[Search-005] Can't access the profile page", async ({ page }) => {
     await page
-      .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+      .locator('xpath=//*[@id="main"]/div[1]/div[5]/header/div/div[2]/div')
       .click();
     await page.waitForTimeout(latency);
     await page.screenshot({

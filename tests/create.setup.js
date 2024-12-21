@@ -96,7 +96,7 @@ test.describe("setup data", () => {
   test("creating a new NFT", async ({ page }) => {
     await page.getByText("Create", { exact: true }).click();
     await page.waitForTimeout(latency);
-    await page.getByText("Mint a NFT", { exact: true }).click();
+    await page.getByText("Mint your artwork", { exact: true }).click();
     await page.waitForTimeout(latency);
     await page.selectOption("select", collection_name);
     await page.waitForTimeout(latency);

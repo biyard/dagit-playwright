@@ -389,18 +389,133 @@ test.describe.serial("NFT", () => {
       .locator('xpath=//*[@id="main"]/div[1]/div[5]/header/div/div[2]/div')
       .click();
     await page.waitForTimeout(latency);
+    await page1.screenshot({
+      path: screenshot_path(
+        "nft",
+        "Image-section-size-check-between-Detail&Activity-menu",
+        "1-go-to-my-profile)"
+      ),
+      fullPage: true,
+    });
     await page.getByText("Test NFT - 1730878927").first().click();
     await page.waitForTimeout(latency);
+    await page1.screenshot({
+      path: screenshot_path(
+        "nft",
+        "Image-section-size-check-between-Detail&Activity-menu",
+        "2-go-to-nft-detail-page)"
+      ),
+      fullPage: true,
+    });
     const style = page.locator('[style="height: 700px"]');
     const originalStyle = await style.evaluate((element) => {
       return element.style.height;
+    });
+    await page1.screenshot({
+      path: screenshot_path(
+        "nft",
+        "Image-section-size-check-between-Detail&Activity-menu",
+        "3-image-section-size-check)"
+      ),
+      fullPage: true,
     });
     console.log(`Original style: ${originalStyle}`);
     await page.getByRole("button", { name: "Activity" }).click();
     const updatedStyle = await style.evaluate((element) => {
       return element.style.height;
     });
+    await page1.screenshot({
+      path: screenshot_path(
+        "nft",
+        "Image-section-size-check-between-Detail&Activity-menu",
+        "4-image-section-size-check-between-Detail)"
+      ),
+      fullPage: true,
+    });
     console.log(`Updated style: ${updatedStyle}`);
     expect(updatedStyle).toBe(originalStyle);
+  });
+
+  test("[NFT-009] Image-visible-check-when-public-nft-minting", async ({
+    page,
+  }) => {
+    await page.goto("https://dev.dagit.club/ko/collection/58/57");
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "nft",
+        "Image-section-size-check-between-Detail&Activity-menu",
+        "1-go-to-my-collection-page"
+      ),
+      fullPage: true,
+    });
+    await page.getByRole("button", { name: "Mint NFT" }).click();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "nft",
+        "Image-section-size-check-between-Detail&Activity-menu",
+        "2-click-mint-nft-button"
+      ),
+      fullPage: true,
+    });
+    await page
+      .locator(
+        'xpath=//*[@id="main"]/div[1]/div[5]/div[1]/div[1]/div/div[2]/div[2]/form/div[2]/input'
+      )
+      .fill("Test");
+    await page.waitForTimeout(latency);
+    await page
+      .locator(
+        'xpath=//*[@id="main"]/div[1]/div[5]/div[1]/div[1]/div/div[2]/div[2]/form/div[3]/textarea'
+      )
+      .fill("Test");
+    await page.waitForTimeout(latency);
+    let fileChooserPromise = page.waitForEvent("filechooser");
+    await page
+      .locator(
+        'xpath=//*[@id="main"]/div[1]/div[5]/div[1]/div[1]/div/div[2]/div[1]/div/div/div/label'
+      )
+      .click();
+    await page.waitForTimeout(latency);
+    let fileChooser = await fileChooserPromise;
+    await fileChooser.setFiles(path.join(image_path, "nft.png"));
+    await page.waitForTimeout(latency);
+    const imageSelector =
+      'xpath=//*[@id="main"]/div[1]/div[5]/div[1]/div[1]/div/div[2]/div[1]/div/div/div/label/img';
+    await page.screenshot({
+      path: screenshot_path(
+        "nft",
+        "Image-section-size-check-between-Detail&Activity-menu",
+        "3-fill-information"
+      ),
+      fullPage: true,
+    });
+    await expect(page.locator(imageSelector)).toBeVisible();
+    await page.getByRole("button", { name: "Create" }).click();
+    let isImageDisappeared = false;
+    for (let i = 0; i < 10; i++) {
+      try {
+        await page.waitForTimeout(300);
+        await expect(page.locator(imageSelector)).toBeVisible({ timeout: 300 });
+      } catch (e) {
+        isImageDisappeared = true;
+        break;
+      }
+    }
+    await page.screenshot({
+      path: screenshot_path(
+        "nft",
+        "Image-section-size-check-between-Detail&Activity-menu",
+        "4-check-minting-screen"
+      ),
+      fullPage: true,
+    });
+    if (isImageDisappeared) {
+      console.log("Image disappeared during the process!");
+    } else {
+      console.log("Image remained visible throughout the process.");
+    }
+    expect(isImageDisappeared).toBe(false);
   });
 });

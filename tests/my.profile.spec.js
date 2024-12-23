@@ -17,7 +17,7 @@ test.describe("My profile", () => {
 
   test("[My profile-001] Edit a profile", async ({ page }) => {
     await page
-      .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+      .locator('xpath=//*[@id="main"]/div[1]/div[5]/header/div/div[2]/div')
       .click();
     await page.waitForTimeout(latency);
     await page.screenshot({
@@ -40,7 +40,7 @@ test.describe("My profile", () => {
     });
     let fileChooserPromise = page.waitForEvent("filechooser");
     let element = await page
-      .locator('xpath=//*[@id="main"]/div[1]/div[4]/div[2]/div/div[2]/label')
+      .locator('xpath=//*[@id="main"]/div[1]/div[5]/div[2]/div/div[2]/label')
       .click();
     await page.waitForTimeout(latency);
     let fileChooser = await fileChooserPromise;
@@ -76,7 +76,7 @@ test.describe("My profile", () => {
 
   test("[My profile-002] Check a Creative credit", async ({ page }) => {
     await page
-      .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+      .locator('xpath=//*[@id="main"]/div[1]/div[5]/header/div/div[2]/div')
       .click();
     await page.waitForTimeout(latency);
     await page.screenshot({
@@ -93,7 +93,7 @@ test.describe("My profile", () => {
     page,
   }) => {
     await page
-      .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+      .locator('xpath=//*[@id="main"]/div[1]/div[5]/header/div/div[2]/div')
       .click();
     await page.waitForTimeout(latency);
     await page.screenshot({
@@ -106,7 +106,7 @@ test.describe("My profile", () => {
     });
     await page
       .locator(
-        'xpath=//*[@id="main"]/div[1]/div[4]/div[3]/div[1]/div/div[2]/button[2]/div'
+        'xpath=//*[@id="main"]/div[1]/div[5]/div[3]/div[1]/div[2]/div[2]/button[2]'
       )
       .click();
     await page.waitForTimeout(latency);
@@ -134,7 +134,7 @@ test.describe("My profile", () => {
     page,
   }) => {
     await page
-      .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+      .locator('xpath=//*[@id="main"]/div[1]/div[5]/header/div/div[2]/div')
       .click();
     await page.waitForTimeout(latency);
     await page.screenshot({
@@ -147,7 +147,7 @@ test.describe("My profile", () => {
     });
     await page
       .locator(
-        'xpath=//*[@id="main"]/div[1]/div[4]/div[3]/div[1]/div/div[2]/button[2]/div'
+        'xpath=//*[@id="main"]/div[1]/div[5]/div[3]/div[1]/div[2]/div[2]/button[2]'
       )
       .click();
     await page.waitForTimeout(latency);
@@ -173,7 +173,7 @@ test.describe("My profile", () => {
 
   test("[My profile-005] Created nft list view", async ({ page }) => {
     await page
-      .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+      .locator('xpath=//*[@id="main"]/div[1]/div[5]/header/div/div[2]/div')
       .click();
     await page.waitForTimeout(latency);
     await page.screenshot({
@@ -188,7 +188,7 @@ test.describe("My profile", () => {
 
   test("[My profile-006] Created agit list view", async ({ page }) => {
     await page
-      .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+      .locator('xpath=//*[@id="main"]/div[1]/div[5]/header/div/div[2]/div')
       .click();
     await page.waitForTimeout(latency);
     await page.screenshot({
@@ -206,6 +206,73 @@ test.describe("My profile", () => {
         "My profile",
         "go-to-created-agit-list",
         "2-go-to-my-agit"
+      ),
+      fullPage: true,
+    });
+  });
+  test("[My profile-007] Check if CC matches actual data", async ({ page }) => {
+    await page.goto("https://dev.dagit.club/ko/user/profile");
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "My profile",
+        "Check-if-CC-matches-actual-data",
+        "1-go-to-my-profile"
+      ),
+      fullPage: true,
+    });
+    const targetElement = await page.locator(
+      "div.flex.gap-2.text-black.w-full.justify-center.items-center"
+    );
+    await page.waitForTimeout(latency);
+    const textContent = await targetElement.innerText();
+    const CC = parseInt(textContent.replace(/\D/g, ""), 10);
+    console.log(`Extracted Number: ${CC}`);
+    await page.screenshot({
+      path: screenshot_path(
+        "My profile",
+        "Check-if-CC-matches-actual-data",
+        "2-Check-the-CC"
+      ),
+      fullPage: true,
+    });
+    await page
+      .locator(
+        'xpath=//*[@id="main"]/div[1]/div[5]/div[3]/div[1]/div[2]/div[2]/button[2]'
+      )
+      .click();
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "My profile",
+        "Check-if-CC-matches-actual-data",
+        "3-Check-the-history-of-CC"
+      ),
+      fullPage: true,
+    });
+    await page.waitForTimeout(latency);
+    const childDivs = page.locator(
+      "div.py-2.lg\\:py-4.flex.flex-col.border-b-\\[1px\\] p.text-\\[\\#707070\\].font-semibold.text-lg"
+    );
+    const divCount = await childDivs.count();
+    console.log(`Number of child divs: ${divCount}`);
+    let total = 0;
+    for (let i = 0; i < divCount; i++) {
+      const textContent = await childDivs.nth(i).innerText();
+      const numbers = textContent.match(/[-+]?\d+/g);
+      if (numbers) {
+        for (const num of numbers) {
+          total += parseInt(num, 10);
+        }
+      }
+    }
+    console.log(`Total Sum of Numbers: ${total}`);
+    expect(total).toBe(CC);
+    await page.screenshot({
+      path: screenshot_path(
+        "My profile",
+        "Check-if-CC-matches-actual-data",
+        "4-CC-matches"
       ),
       fullPage: true,
     });

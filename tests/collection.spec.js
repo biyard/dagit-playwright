@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { chromium } from "playwright";
 import {
   image_path,
   latency,
@@ -32,7 +33,7 @@ test.describe("Collection", () => {
     page,
   }) => {
     await page
-      .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+      .locator('xpath=//*[@id="main"]/div[1]/div[5]/header/div/div[2]/div')
       .click();
     await page.waitForTimeout(latency);
     await page.getByText("My Agit", { exact: true }).click();
@@ -126,7 +127,7 @@ test.describe("Collection", () => {
 
   test("[Collection-003] Follow a collection", async ({ page }) => {
     await page
-      .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+      .locator('xpath=//*[@id="main"]/div[1]/div[5]/header/div/div[2]/div')
       .click();
     await page.waitForTimeout(latency);
     await page.getByText("My Agit", { exact: true }).click();
@@ -167,7 +168,7 @@ test.describe("Collection", () => {
     page,
   }) => {
     await page
-      .locator('xpath=//*[@id="main"]/div[1]/div[4]/header/div/div[2]/div')
+      .locator('xpath=//*[@id="main"]/div[1]/div[5]/header/div/div[2]/div')
       .click();
     await page.waitForTimeout(latency);
     await page.screenshot({
@@ -214,6 +215,110 @@ test.describe("Collection", () => {
       );
     }
 
+    await page.screenshot({
+      path: screenshot_path(
+        "collection",
+        "Check-item-quantity-matches-the-displayed-text",
+        "3-check-item-quantity"
+      ),
+      fullPage: true,
+    });
+  });
+
+  test("[Collection-005] Mint-NFT-function-in-collection", async ({ page }) => {
+    await page.goto("https://dev.dagit.club/ko/collection/151/131");
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "collection",
+        "Mint-NFT-function-in-collection",
+        "1-go-to-collection"
+      ),
+      fullPage: true,
+    });
+    await page.getByRole("button", { name: "Mint NFT" }).click();
+    await page.waitForTimeout(latency);
+    await page
+      .getByPlaceholder("Name yout NFT", { exact: true })
+      .fill(nft_name);
+    await page.waitForTimeout(latency);
+    await page
+      .getByPlaceholder("Enter a description", { exact: true })
+      .fill("Test");
+    await page.waitForTimeout(latency);
+    let fileChooserPromise = page.waitForEvent("filechooser");
+    await page
+      .locator(
+        'xpath=//*[@id="main"]/div[1]/div[5]/div[1]/div[1]/div/div[2]/div[1]/div/div/div/label'
+      )
+      .click();
+    await page.waitForTimeout(latency);
+    let fileChooser = await fileChooserPromise;
+    await fileChooser.setFiles(path.join(image_path, "nft.png"));
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "collection",
+        "Mint-NFT-function-in-collection",
+        "3-fill-the-descriptions"
+      ),
+      fullPage: true,
+    });
+    await page.getByRole("button", { name: "Create" }).click();
+    await page.waitForTimeout(latency);
+    const result = page.getByText(nft_name);
+    await expect(result).toBeVisible();
+    await page.screenshot({
+      path: screenshot_path(
+        "collection",
+        "Mint-NFT-function-in-collection",
+        "4-NFT-created-success"
+      ),
+      fullPage: true,
+    });
+  });
+
+  test("[Collection-006] Check-item-quantity-matches-in-collection-items", async ({
+    page,
+  }) => {
+    await page.goto("https://dev.dagit.club/ko/collection/list");
+    await page.waitForTimeout(latency);
+    await page.screenshot({
+      path: screenshot_path(
+        "collection",
+        "Check-item-quantity-matches-in-collection-items",
+        "1-go-to-collection-list-page"
+      ),
+      fullPage: true,
+    });
+    const browser = await chromium.launch();
+    const context = await browser.newContext();
+    const page1 = await context.newPage();
+    await page1.goto("https://dev.dagit.club/ko/collection/list");
+    await page1
+      .locator('xpath =//*[@id="main"]/div[1]/div[5]/div[1]/div/div[1]/div/img')
+      .click();
+    const childDivs = await page1.locator(
+      'xpath=//*[@id="main"]/div[1]/div[5]/div[1]/div[2]/div[3]/*'
+    );
+    await page1.waitForTimeout(latency);
+    const count = await childDivs.count();
+    const displayedText = await page
+      .locator(
+        'xpath=//*[@id="main"]/div[1]/div[5]/div[1]/div/div[1]/p[2]/span'
+      )
+      .innerText();
+    const displayedNumber = parseInt(displayedText.replace(/\D/g, ""), 10);
+
+    if (count === displayedNumber) {
+      console.log(
+        `Test passed: Item count (${count}) matches displayed number (${displayedNumber})`
+      );
+    } else {
+      throw new Error(
+        `Test failed: Item count (${count}) does not match displayed number (${displayedNumber})`
+      );
+    }
     await page.screenshot({
       path: screenshot_path(
         "collection",
